@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ReactStateDeclaration } from "@uirouter/react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Grid, Typography, Button, Box, TextField } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  Button,
+  Box,
+  TextField,
+  CircularProgress,
+} from "@material-ui/core";
 import { $crud } from "./factories/CrudFactory";
 import { useCurrentUser } from "./factories/UserFactory";
 
@@ -42,7 +48,7 @@ export function Home() {
     >
       <Grid item xs={12} className="ml-2 p-3 chat_area">
         {loading ? (
-          <></>
+          <CircularProgress />
         ) : (
           <Grid item className="chat_content">
             {myArray &&
