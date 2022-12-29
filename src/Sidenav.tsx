@@ -25,17 +25,24 @@ export function Sidenav({ user }) {
 
   const Links = [
     {
-      label: "Dashboard",
-      link: "dashboard",
-    },
-
-    {
-      label: "Appointments",
-      link: "appointments",
+      label: "Text Genrator",
+      link: "home",
     },
     {
-      label: "Settings",
-      link: "setting",
+      label: "Image Genrator",
+      link: "image-genratetor",
+    },
+    {
+      label: "Email Genrator",
+      link: "email",
+    },
+    {
+      label: "Blog Post Genrator",
+      link: "blog",
+    },
+    {
+      label: "SEO Tags Genrator",
+      link: "seo",
     },
   ];
 
@@ -45,11 +52,9 @@ export function Sidenav({ user }) {
       variant="permanent"
       anchor="left"
     >
-      <img
-        src={require("../logo.png")}
-        className="p-3 mx-auto"
-        style={{ width: 200 }}
-      />
+      <Typography variant="h5" color="primary" className="p-3 mx-auto">
+        ChatGPT
+      </Typography>
       <Divider />
       <List className="p-0">
         {Links.map((item, i) => (
@@ -61,48 +66,6 @@ export function Sidenav({ user }) {
             </ListItem>
           </UISref>
         ))}
-        {/* {user ? (
-          <>
-            {doctorLinks.map((item, i) => (
-              <UISref to={item.link} key={i}>
-                <ListItem button>
-                  <Typography variant="subtitle2" className="p-2">
-                    {item.label}
-                  </Typography>
-                </ListItem>
-              </UISref>
-            ))}
-            {user.role_id == "patient" ? (
-              <>
-                {patientLinks.map((item, i) => (
-                  <UISref to={item.link} key={i}>
-                    <ListItem button>
-                      <Typography variant="subtitle2" className="p-2">
-                        {item.label}
-                      </Typography>
-                    </ListItem>
-                  </UISref>
-                ))}
-              </>
-            ) : user.role_id == "doctor" ? (
-              <>
-                {doctorLinks.map((item, i) => (
-                  <UISref to={item.link} key={i}>
-                    <ListItem button>
-                      <Typography variant="subtitle2" className="p-2">
-                        {item.label}
-                      </Typography>
-                    </ListItem>
-                  </UISref>
-                ))}
-              </>
-            ) : (
-              <></>
-            )}
-          </>
-        ) : (
-          <></>
-        )} */}
       </List>
     </Drawer>
   );

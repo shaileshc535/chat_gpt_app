@@ -9,12 +9,12 @@ import {
   CircularProgress,
   Paper,
 } from "@material-ui/core";
-import { $crud } from "./factories/CrudFactory";
-import { useCurrentUser } from "./factories/UserFactory";
+import { $crud } from "../factories/CrudFactory";
 
-export function Home() {
+const SeoTagGenrator = () => {
   const [loading, setLoading] = useState<Boolean>(false);
-  const [prompt, setPrompt] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [myArray, setMyArray] = useState([]);
   const bottomRef = useRef(null);
 
@@ -23,8 +23,9 @@ export function Home() {
     try {
       setMyArray((oldArray) => [...oldArray, { prompt: prompt, key: 1 }]);
 
-      const dataVal = await $crud.post("chat/gpt", {
-        prompt,
+      const dataVal = await $crud.post("chat/blog", {
+        title,
+        description,
       });
 
       const newData = dataVal.data;
@@ -35,7 +36,6 @@ export function Home() {
     } catch (e) {
       console.log(e);
     }
-    setPrompt("");
     setLoading(false);
   };
 
@@ -56,7 +56,7 @@ export function Home() {
         {loading ? (
           <CircularProgress />
         ) : (
-          <Grid item className="chat_content">
+          <Grid item className="chat_content_seo">
             {myArray &&
               myArray.map((item, i) => (
                 <>
@@ -108,15 +108,27 @@ export function Home() {
             promptCreateFunction();
           }}
         >
-          <Grid container item xs={12} className="p-2-all p-2 my-2 ">
+          <Grid container item xs={12} className="p-2-all">
             <TextField
               required
               className="textfield"
-              label="Ask Questions in Playground"
+              label="SEO Title"
               type="text"
-              name="prompt"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Grid>
+
+          <Grid container item xs={12} className="p-2-all">
+            <TextField
+              required
+              className="textfield"
+              label="SEO Description"
+              type="text"
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </Grid>
 
@@ -134,16 +146,16 @@ export function Home() {
       </Grid>
     </Grid>
   );
-}
+};
 
 export const states: ReactStateDeclaration[] = [
   {
-    url: "/home",
-    name: "home",
+    url: "/seo",
+    name: "seo",
     data: {
-      title: "Home",
+      title: "SeoTagGenrator",
       loggedIn: false,
     },
-    component: Home,
+    component: SeoTagGenrator,
   },
 ];

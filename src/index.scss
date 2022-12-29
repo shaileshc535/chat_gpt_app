@@ -112,16 +112,23 @@ label {
 
 .mainContainer {
   position: relative;
-  max-height: 100vh;
-  min-height: 100vh;
-}
-
-.chat_area {
-  height: 85%;
+  max-height: 89vh;
+  min-height: 89vh;
 }
 
 .chat_area {
   height: 100%;
+}
+
+.chat_content_seo {
+  height: 400px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.chat_content {
+  height: 500px;
+  max-height: 500px;
   overflow-y: auto;
 }
 
@@ -133,11 +140,16 @@ label {
 }
 
 .textfield {
-  width: 95% !important;
+  width: 50% !important;
   font-size: 18px !important;
   padding: 10px;
   background: transparent;
   border-radius: 5px;
   border: none;
   outline: none;
+}
+
+.submit-button {
+  padding: 12px 30px !important;
+  font-size: 16px !important;
 }

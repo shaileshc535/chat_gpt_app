@@ -21,8 +21,6 @@ import { Sidenav } from "./Sidenav";
 const useStyles = makeStyles({
   appContainer: {
     backgroundColor: "#eee",
-    // backgroundColor: "#1c1c1e",
-
     overflowY: "auto",
     overflowX: "hidden",
   },
@@ -85,9 +83,9 @@ export function AppComponent() {
         <UIRouter router={router}>
           <ThemeProvider theme={theme}>
             <Grid container wrap="nowrap">
-              {/* {user && <Sidenav />} */}
+              {user && <Sidenav />}
               <Grid item xs container direction="column">
-                {/* {user && <TopNav />} */}
+                {user && <TopNav />}
                 <Grid
                   item
                   xs

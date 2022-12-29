@@ -33,11 +33,26 @@ const states: ReactStateDeclaration[] = [
     name: "home.**",
     lazyLoad: () => import("./Home"),
   },
-  // {
-  //   url: "/dashboard",
-  //   name: "dashboard.**",
-  //   lazyLoad: () => import("./Dashboard"),
-  // },
+  {
+    url: "/image-genratetor",
+    name: "image-genratetor.**",
+    lazyLoad: () => import("./screens/ImageGenrator"),
+  },
+  {
+    url: "/email",
+    name: "email.**",
+    lazyLoad: () => import("./screens/EmailGenrator"),
+  },
+  {
+    url: "/seo",
+    name: "seo.**",
+    lazyLoad: () => import("./screens/SeoTagGenrator"),
+  },
+  {
+    url: "/blog",
+    name: "blog.**",
+    lazyLoad: () => import("./screens/BlogPostGenrator"),
+  },
 ];
 
 states.forEach((state) => router.stateRegistry.register(state));

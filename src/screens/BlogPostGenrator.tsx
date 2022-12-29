@@ -9,10 +9,9 @@ import {
   CircularProgress,
   Paper,
 } from "@material-ui/core";
-import { $crud } from "./factories/CrudFactory";
-import { useCurrentUser } from "./factories/UserFactory";
+import { $crud } from "../factories/CrudFactory";
 
-export function Home() {
+const BlogPostGenrator = () => {
   const [loading, setLoading] = useState<Boolean>(false);
   const [prompt, setPrompt] = useState("");
   const [myArray, setMyArray] = useState([]);
@@ -23,7 +22,7 @@ export function Home() {
     try {
       setMyArray((oldArray) => [...oldArray, { prompt: prompt, key: 1 }]);
 
-      const dataVal = await $crud.post("chat/gpt", {
+      const dataVal = await $crud.post("chat/blog", {
         prompt,
       });
 
@@ -112,7 +111,7 @@ export function Home() {
             <TextField
               required
               className="textfield"
-              label="Ask Questions in Playground"
+              label="Blog keyword "
               type="text"
               name="prompt"
               value={prompt}
@@ -134,16 +133,16 @@ export function Home() {
       </Grid>
     </Grid>
   );
-}
+};
 
 export const states: ReactStateDeclaration[] = [
   {
-    url: "/home",
-    name: "home",
+    url: "/blog",
+    name: "blog",
     data: {
-      title: "Home",
+      title: "BlogPostGenrator",
       loggedIn: false,
     },
-    component: Home,
+    component: BlogPostGenrator,
   },
 ];
