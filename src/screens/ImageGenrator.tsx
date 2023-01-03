@@ -33,7 +33,22 @@ const ImageGenrator = () => {
     } catch (e) {
       console.log(e);
     }
-    setKeyword("");
+    setLoading(false);
+  };
+
+  const ImageReGenratorFunction = async () => {
+    setLoading(true);
+    try {
+      const dataVal = await $crud.post("chat/image", {
+        keyword,
+      });
+
+      const newData = dataVal.data;
+
+      setImageUrl(newData);
+    } catch (e) {
+      console.log(e);
+    }
     setLoading(false);
   };
 
@@ -43,9 +58,33 @@ const ImageGenrator = () => {
       direction="column"
       wrap="nowrap"
       style={{ position: "relative" }}
-      className="mainContainer my-2"
     >
-      <Grid item xs={12} className="ml-2 p-3 chat_area" component={Paper}>
+      <Grid item xs={12} className="p-2-all">
+        <Grid container>
+          <Grid component={Paper} item xs={12} className="p-2-all p-2 border">
+            <Grid container className={"p-2-all"}>
+              <Grid item xs={12} className={"p-2-all"}>
+                <Typography
+                  variant="h6"
+                  component={Grid}
+                  item
+                  xs
+                  className="font-weight-bold pl-3"
+                >
+                  Image Genrator
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid
+        item
+        xs={12}
+        className="p-2-all mx-2 border chat_area"
+        component={Paper}
+      >
         {loading ? (
           <CircularProgress />
         ) : (
@@ -55,7 +94,7 @@ const ImageGenrator = () => {
                 <Typography variant="h6" className="p-2-all p-2">
                   {myArray + " image"}
                 </Typography>
-                <img src={imageUrl} width="450" height="400" alt="image" />
+                <img src={imageUrl} width="400" height="350" alt="image" />
               </>
             ) : (
               <></>
@@ -88,12 +127,23 @@ const ImageGenrator = () => {
 
           <Grid container item xs={12} className="p-2-all p-2 my-2 ">
             <Button
+              disabled={!keyword ? true : false}
               type="submit"
               color="primary"
               variant="contained"
               className="submit-button"
             >
               {loading ? "loading" : "Submit"}
+            </Button>
+            <Button
+              disabled={!imageUrl ? true : false}
+              type="submit"
+              color="secondary"
+              variant="contained"
+              className="submit-button ml-4"
+              onClick={ImageReGenratorFunction}
+            >
+              Re-Generate
             </Button>
           </Grid>
         </Box>

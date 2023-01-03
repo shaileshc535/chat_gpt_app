@@ -14,6 +14,7 @@ import { $crud } from "../factories/CrudFactory";
 const SeoTagGenrator = () => {
   const [loading, setLoading] = useState<Boolean>(false);
   const [title, setTitle] = useState("");
+  const [response, setResponse] = useState("");
   const [description, setDescription] = useState("");
   const [myArray, setMyArray] = useState([]);
   const bottomRef = useRef(null);
@@ -29,10 +30,28 @@ const SeoTagGenrator = () => {
       });
 
       const newData = dataVal.data;
+      setResponse(newData);
 
       setMyArray((oldArray) => [...oldArray, { prompt: newData, key: 2 }]);
+    } catch (e) {
+      console.log(e);
+    }
+    setLoading(false);
+  };
 
-      console.log(myArray);
+  const promptRegenrateFunction = async () => {
+    setLoading(true);
+    try {
+      const dataVal = await $crud.post("chat/blog", {
+        title,
+        description,
+      });
+
+      const newData = dataVal.data;
+
+      setResponse(newData);
+
+      setMyArray((oldArray) => [...oldArray, { prompt: newData, key: 2 }]);
     } catch (e) {
       console.log(e);
     }
@@ -50,9 +69,33 @@ const SeoTagGenrator = () => {
       direction="column"
       wrap="nowrap"
       style={{ position: "relative" }}
-      className="mainContainer my-2"
     >
-      <Grid item xs={12} className="ml-2 p-3 chat_area" component={Paper}>
+      <Grid item xs={12} className="p-2-all">
+        <Grid container>
+          <Grid component={Paper} item xs={12} className="p-2-all p-2 border">
+            <Grid container className={"p-2-all"}>
+              <Grid item xs={12} className={"p-2-all"}>
+                <Typography
+                  variant="h6"
+                  component={Grid}
+                  item
+                  xs
+                  className="font-weight-bold pl-3"
+                >
+                  SEO Tag Genrator
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid
+        item
+        xs={12}
+        className="p-2-all mx-2 border chat_area"
+        component={Paper}
+      >
         {loading ? (
           <CircularProgress />
         ) : (
@@ -134,12 +177,23 @@ const SeoTagGenrator = () => {
 
           <Grid container item xs={12} className="p-2-all p-2 my-2 ">
             <Button
+              disabled={!title ? true : false}
               type="submit"
               color="primary"
               variant="contained"
               className="submit-button"
             >
               {loading ? "loading" : "Submit"}
+            </Button>
+            <Button
+              disabled={!response ? true : false}
+              type="submit"
+              color="secondary"
+              variant="contained"
+              className="submit-button ml-4"
+              onClick={promptRegenrateFunction}
+            >
+              Re-Generate
             </Button>
           </Grid>
         </Box>

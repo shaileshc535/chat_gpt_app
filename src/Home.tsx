@@ -10,11 +10,11 @@ import {
   Paper,
 } from "@material-ui/core";
 import { $crud } from "./factories/CrudFactory";
-import { useCurrentUser } from "./factories/UserFactory";
 
 export function Home() {
   const [loading, setLoading] = useState<Boolean>(false);
   const [prompt, setPrompt] = useState("");
+  const [response, setResponse] = useState("");
   const [myArray, setMyArray] = useState([]);
   const bottomRef = useRef(null);
 
@@ -29,18 +29,36 @@ export function Home() {
 
       const newData = dataVal.data;
 
+      setResponse(newData);
+
       setMyArray((oldArray) => [...oldArray, { prompt: newData, key: 2 }]);
 
       console.log(myArray);
     } catch (e) {
       console.log(e);
     }
-    setPrompt("");
+    setLoading(false);
+  };
+
+  const promptRegenrateFunction = async () => {
+    setLoading(true);
+    try {
+      const dataVal = await $crud.post("chat/gpt", {
+        prompt,
+      });
+
+      const newData = dataVal.data;
+
+      setResponse(newData);
+
+      setMyArray((oldArray) => [...oldArray, { prompt: newData, key: 2 }]);
+    } catch (e) {
+      console.log(e);
+    }
     setLoading(false);
   };
 
   useEffect(() => {
-    // 👇️ scroll to bottom every time messages change
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [myArray]);
 
@@ -50,9 +68,33 @@ export function Home() {
       direction="column"
       wrap="nowrap"
       style={{ position: "relative" }}
-      className="mainContainer my-2"
     >
-      <Grid item xs={12} className="ml-2 p-3 chat_area" component={Paper}>
+      <Grid item xs={12} className="p-2-all">
+        <Grid container>
+          <Grid component={Paper} item xs={12} className="p-2-all p-2 border">
+            <Grid container className={"p-2-all"}>
+              <Grid item xs={12} className={"p-2-all"}>
+                <Typography
+                  variant="h6"
+                  component={Grid}
+                  item
+                  xs
+                  className="font-weight-bold pl-3"
+                >
+                  Text Genrator
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid
+        item
+        xs={12}
+        className="p-2-all mx-2 border chat_area"
+        component={Paper}
+      >
         {loading ? (
           <CircularProgress />
         ) : (
@@ -122,12 +164,23 @@ export function Home() {
 
           <Grid container item xs={12} className="p-2-all p-2 my-2 ">
             <Button
+              disabled={!prompt ? true : false}
               type="submit"
               color="primary"
               variant="contained"
               className="submit-button"
             >
               {loading ? "loading" : "Submit"}
+            </Button>
+            <Button
+              disabled={!response ? true : false}
+              type="submit"
+              color="secondary"
+              variant="contained"
+              className="submit-button ml-4"
+              onClick={promptRegenrateFunction}
+            >
+              Re-Generate
             </Button>
           </Grid>
         </Box>
