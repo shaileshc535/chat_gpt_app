@@ -10,8 +10,7 @@ require("dotenv").config();
 module.exports = (env = {}) => {
   const { mode = "development", context = "/" } = env;
 
-  const { API_URL, TWILIO_API_SECRET, TWILIO_API_KEY, TWILIO_ACCOUNT_SID } =
-    process.env;
+  const { API_URL } = process.env;
 
   let publicPath = context;
 
@@ -66,10 +65,6 @@ module.exports = (env = {}) => {
           use: ["sass-loader"],
         },
         {
-          test: /\.css$/,
-          use: ["css-loader"],
-        },
-        {
           test: /\.(svg|jpg|png|jpeg|gif|eot|woff|ttf|ico)/,
           use: "file-loader",
         },
@@ -85,14 +80,8 @@ module.exports = (env = {}) => {
     plugins: [
       new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
-        env: JSON.stringify({
-          API_URL,
-          TWILIO_ACCOUNT_SID,
-          TWILIO_API_SECRET,
-          TWILIO_API_KEY,
-        }),
+        env: JSON.stringify({ API_URL }),
       }),
-
       new MiniCssExtractPlugin({
         chunkFilename: "[name].css",
       }),

@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "build": "webpack --env.mode=production --progress",
-    "serve": "webpack-dev-server --progress"
+    "serve": "webpack-dev-server --progress",
+    "start":"webpack-dev-server --progress"
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.5",
